@@ -13,6 +13,12 @@ class MultilingualManager(models.Manager):
     and additionaly filter or order querysets returned by that manager.
     """
 
+    def m2m_target_field_name(self):
+        return self.model._meta.pk.name
+
+    def m2m_reverse_target_field_name(self):
+        return self.rel.to._meta.pk.name
+
     def get_query_set(self):
         return MultilingualModelQuerySet(self.model)
 Manager = MultilingualManager # backwards compat, will be depricated
